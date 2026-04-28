@@ -509,9 +509,115 @@ if (backToTop) {
   });
 }
 
+// ===== Ongoing Project =====
+const ongoingProject = {
+  id: 'ongoing',
+  title: 'Wayne Densch Center for Student-Athlete Leadership',
+  category: 'Architecture / Digital Twin',
+  description: 'A 1:1 scale digital twin of the Wayne Densch Center for Student-Athlete Leadership at UCF. The goal is architectural precision modeling — translating 2D blueprints into a game-engine-ready 3D environment.',
+  workflow: 'Working from 2D site blueprints in Maya, with strict unit scale synchronization to ensure every structural element matches real-world measurements within a millimeter of tolerance. Model is designed to function as a reliable Digital Twin for construction logistics and site safety planning.',
+  learnings: [
+    'Architectural precision and blueprint-to-3D translation',
+    'Unit Scale synchronization between Maya and Unreal Engine',
+    'Window spacing and symmetry calculation across multiple facades',
+    'Interior space definition through boolean cutting workflows'
+  ],
+  images: [
+    './images/before_bevel.jpg',
+    './images/DSC_0009.jpg',
+    './images/DSC_0002.jpg',
+    './images/front_building.png'
+  ],
+  tools: ['Maya', 'Architectural Modeling', 'Digital Twin', 'Precision Scale'],
+  color: '#06b6d4'
+};
+
+function renderOngoingProject() {
+  const container = document.querySelector('.ongoing-slideshow-container');
+  if (container) {
+    createSlideshow(ongoingProject.images, container, ongoingProject.id);
+  }
+
+  const card = document.getElementById('ongoing-project-card');
+  if (card) {
+    card.addEventListener('click', () => {
+      openOngoingLightbox();
+    });
+  }
+}
+
+function openOngoingLightbox() {
+  const project = ongoingProject;
+  if (!lightbox) return;
+
+  currentLightboxProject = project;
+
+  lightboxContent.innerHTML = `
+    <button class="lightbox-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="lightbox-image-container slideshow-container-lightbox"></div>
+    <div class="lightbox-body">
+      <span class="lightbox-category" style="background: ${project.color}20; color: ${project.color}">${project.category}</span>
+      <h3 class="lightbox-title">${project.title}</h3>
+      <p class="lightbox-desc">${project.description}</p>
+
+      <div class="lightbox-section">
+        <h4 class="lightbox-section-title purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          </svg>
+          Workflow
+        </h4>
+        <p class="lightbox-text">${project.workflow}</p>
+      </div>
+
+      <div class="lightbox-section">
+        <h4 class="lightbox-section-title cyan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Key Learnings
+        </h4>
+        <ul class="lightbox-list">
+          ${project.learnings.map(l => `<li>${l}</li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="lightbox-section">
+        <h4 class="lightbox-section-title pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          Tools Used
+        </h4>
+        <div class="lightbox-tools">
+          ${project.tools.map(t => `<span class="lightbox-tool">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  const lightboxSlideshowContainer = lightboxContent.querySelector('.slideshow-container-lightbox');
+  if (lightboxSlideshowContainer) {
+    createSlideshow(project.images, lightboxSlideshowContainer, `lightbox-${project.id}`);
+  }
+
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  lightboxContent.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+}
+
 // ===== Initialize =====
 document.addEventListener('DOMContentLoaded', () => {
   renderPortfolio();
+  renderOngoingProject();
   animateSkillBars();
 });
 
