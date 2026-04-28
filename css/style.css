@@ -640,6 +640,25 @@ body {
   transition: width 0.1s linear;
 }
 
+/* ===== Ongoing Card Wrapper ===== */
+.ongoing-card-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ongoing-featured-card {
+  cursor: pointer;
+}
+
+.ongoing-featured-card .card-image-container {
+  aspect-ratio: 16/9;
+}
+
+.ongoing-desc {
+  font-size: 0.875rem !important;
+  line-height: 1.75 !important;
+}
+
 /* ===== Ongoing Project ===== */
 .ongoing-project-container {
   max-width: 900px;
